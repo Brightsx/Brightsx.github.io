@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>First Page</title>
-    <url>/2023/11/01/First-Page/</url>
+    <title>第一次提交</title>
+    <url>/2023/11/01/First-Page-cn/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>tc</category>
@@ -10,5 +10,21 @@
       <tags>
         <tag>tt</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>First Page</title>
+    <url>/2023/11/01/First-Page-en/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>tc</category>
+      </categories>
+      <tags>
+        <tag>tt</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Test</title>
+    <url>/2023/11/01/Test/</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
