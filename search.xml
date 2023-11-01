@@ -12,6 +12,14 @@
       </tags>
   </entry>
   <entry>
+    <title>Test</title>
+    <url>/2023/11/01/Test/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>test</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>First Page</title>
     <url>/2023/11/01/First-Page-en/</url>
     <content><![CDATA[]]></content>
@@ -20,14 +28,6 @@
       </categories>
       <tags>
         <tag>tt</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Test</title>
-    <url>/2023/11/01/Test/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>test</tag>
       </tags>
   </entry>
 </search>
