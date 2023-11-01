@@ -20,28 +20,35 @@
     var CONFIG = {"hostname":"brightsx.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="许晟的个人博客">
-<meta property="og:url" content="https://brightsx.github.io/home/index.html">
+  <meta name="description" content="写在最前面这是我的第三届北京大学信息安全综合能力竞赛参赛记录。10月6日知道了学校有这个比赛，这是比赛的官网。虽然对网络安全之前没有系统学习过，也没有任何实践，但课余的时候自学过计算机系统导论和操作系统的一些理论，就来参加这个比赛了。比赛为期一周，10月13日18:00-10月20日18:00，两个阶段结束后最终拿了校内的38名，下面是这次比赛我的writeup。 一眼盯帧（通过）(# prob2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PKU-Geekgame-3rd">
+<meta property="og:url" content="https://brightsx.github.io/2023/11/01/PKU-Geekgame-3rd/index.html">
 <meta property="og:site_name" content="许晟的个人博客">
+<meta property="og:description" content="写在最前面这是我的第三届北京大学信息安全综合能力竞赛参赛记录。10月6日知道了学校有这个比赛，这是比赛的官网。虽然对网络安全之前没有系统学习过，也没有任何实践，但课余的时候自学过计算机系统导论和操作系统的一些理论，就来参加这个比赛了。比赛为期一周，10月13日18:00-10月20日18:00，两个阶段结束后最终拿了校内的38名，下面是这次比赛我的writeup。 一眼盯帧（通过）(# prob2">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-11-01T10:54:28.000Z">
+<meta property="article:modified_time" content="2023-11-01T11:08:47.931Z">
 <meta property="article:author" content="Sheng Xu">
+<meta property="article:tag" content="geekgame">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="参赛记录">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://brightsx.github.io/home/">
+<link rel="canonical" href="https://brightsx.github.io/2023/11/01/PKU-Geekgame-3rd/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>许晟的个人博客</title>
+  <title>PKU-Geekgame-3rd | 许晟的个人博客</title>
   
 
 
@@ -185,9 +192,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -203,10 +211,9 @@
       <meta itemprop="name" content="许晟的个人博客">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/01/PKU-Geekgame-3rd/" class="post-title-link" itemprop="url">PKU-Geekgame-3rd</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          PKU-Geekgame-3rd
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -239,7 +246,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="写在最前面"><a href="#写在最前面" class="headerlink" title="写在最前面"></a>写在最前面</h1><p>这是我的第三届北京大学信息安全综合能力竞赛参赛记录。10月6日知道了学校有这个比赛，这是<a target="_blank" rel="noopener" href="https://geekgame.pku.edu.cn">比赛的官网</a>。虽然对网络安全之前没有系统学习过，也没有任何实践，但课余的时候自学过计算机系统导论和操作系统的一些理论，就来参加这个比赛了。比赛为期一周，10月13日18:00-10月20日18:00，两个阶段结束后最终拿了校内的38名，下面是这次比赛我的writeup。</p>
+        <h1 id="写在最前面"><a href="#写在最前面" class="headerlink" title="写在最前面"></a>写在最前面</h1><p>这是我的第三届北京大学信息安全综合能力竞赛参赛记录。10月6日知道了学校有这个比赛，这是<a target="_blank" rel="noopener" href="https://geekgame.pku.edu.cn">比赛的官网</a>。虽然对网络安全之前没有系统学习过，也没有任何实践，但课余的时候自学过计算机系统导论和操作系统的一些理论，就来参加这个比赛了。比赛为期一周，10月13日18:00-10月20日18:00，两个阶段结束后最终拿了校内的38名，下面是这次比赛我的writeup。</p>
 <h1 id="一眼盯帧（通过）"><a href="#一眼盯帧（通过）" class="headerlink" title="一眼盯帧（通过）"></a>一眼盯帧（通过）</h1><p>(# prob23-signin)</p>
 <p>gif文件中开头为synt，在搜索引擎中查找ROT13解码，输入文本解码即可。</p>
 <h1 id="小北问答（通过）"><a href="#小北问答（通过）" class="headerlink" title="小北问答（通过）"></a>小北问答（通过）</h1><p>(# prob18-trivia)</p>
@@ -402,155 +409,35 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">pixel = <span class="number">50</span></span><br><span class="line"></span><br><span class="line">pic_dir = <span class="string">&#x27;./picture/&#x27;</span></span><br><span class="line">save_dir = <span class="string">&#x27;./qrcode/&#x27;</span></span><br><span class="line"><span class="comment"># pic_file_list = [file for file in os.listdir(pic_dir) if &quot;.png&quot; in file]</span></span><br><span class="line"></span><br><span class="line">fix_file_list = [<span class="string">&#x27;AA.png&#x27;</span>, <span class="string">&#x27;AB.png&#x27;</span>, <span class="string">&#x27;AD.png&#x27;</span>, <span class="string">&#x27;AE.png&#x27;</span>, <span class="string">&#x27;BA.png&#x27;</span>, <span class="string">&#x27;BB.png&#x27;</span>, <span class="string">&#x27;BC.png&#x27;</span>, <span class="string">&#x27;BD.png&#x27;</span>, <span class="string">&#x27;BE.png&#x27;</span>, <span class="string">&#x27;CB.png&#x27;</span>, <span class="string">&#x27;DA.png&#x27;</span>, <span class="string">&#x27;DB.png&#x27;</span>, <span class="string">&#x27;DD.png&#x27;</span>, <span class="string">&#x27;EA.png&#x27;</span>, <span class="string">&#x27;EB.png&#x27;</span>, <span class="string">&#x27;ED.png&#x27;</span>]</span><br><span class="line">fix_locs = [[<span class="number">0</span>, <span class="number">0</span>], [<span class="number">1</span>, <span class="number">0</span>], [<span class="number">3</span>, <span class="number">0</span>], [<span class="number">4</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">1</span>], [<span class="number">2</span>, <span class="number">1</span>], [<span class="number">3</span>, <span class="number">1</span>], [<span class="number">4</span>, <span class="number">1</span>], [<span class="number">1</span>, <span class="number">2</span>], [<span class="number">0</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">3</span>], [<span class="number">0</span>, <span class="number">4</span>], [<span class="number">1</span>, <span class="number">4</span>], [<span class="number">3</span>, <span class="number">4</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># DEpos_file_list = [&#x27;DE1.png&#x27;, &#x27;DE2.png&#x27;]</span></span><br><span class="line"><span class="comment"># other_file_list = [&#x27;e1.png&#x27;, &#x27;e2.png&#x27;, &#x27;e3.png&#x27;, &#x27;e4.png&#x27;, &#x27;e5.png&#x27;, &#x27;e6.png&#x27;, &#x27;n1.png&#x27;]</span></span><br><span class="line">mob_file_list = [<span class="string">&#x27;DE1.png&#x27;</span>, <span class="string">&#x27;DE2.png&#x27;</span>, <span class="string">&#x27;e1.png&#x27;</span>, <span class="string">&#x27;e2.png&#x27;</span>, <span class="string">&#x27;e3.png&#x27;</span>, <span class="string">&#x27;e4.png&#x27;</span>, <span class="string">&#x27;e5.png&#x27;</span>, <span class="string">&#x27;e6.png&#x27;</span>, <span class="string">&#x27;n1.png&#x27;</span>]</span><br><span class="line">mob_locs = [[<span class="number">2</span>, <span class="number">0</span>], [<span class="number">0</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">2</span>], [<span class="number">4</span>, <span class="number">2</span>], [<span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">3</span>] ,[<span class="number">2</span>, <span class="number">4</span>], [<span class="number">4</span>, <span class="number">4</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># image_aa = Image.open(f&#x27;&#123;pic_dir&#125;AA.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_ab = Image.open(f&#x27;&#123;pic_dir&#125;AB.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_ad = Image.open(f&#x27;&#123;pic_dir&#125;AD.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_ae = Image.open(f&#x27;&#123;pic_dir&#125;AE.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_ba = Image.open(f&#x27;&#123;pic_dir&#125;BA.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_bb = Image.open(f&#x27;&#123;pic_dir&#125;BB.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_bc = Image.open(f&#x27;&#123;pic_dir&#125;BC.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_bd = Image.open(f&#x27;&#123;pic_dir&#125;BD.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_be = Image.open(f&#x27;&#123;pic_dir&#125;BE.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_cb = Image.open(f&#x27;&#123;pic_dir&#125;CB.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_da = Image.open(f&#x27;&#123;pic_dir&#125;DA.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_db = Image.open(f&#x27;&#123;pic_dir&#125;DB.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_dd = Image.open(f&#x27;&#123;pic_dir&#125;DD.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_ea = Image.open(f&#x27;&#123;pic_dir&#125;EA.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_eb = Image.open(f&#x27;&#123;pic_dir&#125;EB.png&#x27;)</span></span><br><span class="line"><span class="comment"># image_ed = Image.open(f&#x27;&#123;pic_dir&#125;ED.png&#x27;)</span></span><br><span class="line"></span><br><span class="line">fix_images = []</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> fix_file_list:</span><br><span class="line">    image = Image.<span class="built_in">open</span>(<span class="string">f&#x27;<span class="subst">&#123;pic_dir&#125;</span><span class="subst">&#123;file&#125;</span>&#x27;</span>)</span><br><span class="line">    fix_images.append(image)</span><br><span class="line"></span><br><span class="line">mob_images = []</span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> mob_file_list:</span><br><span class="line">    image = Image.<span class="built_in">open</span>(<span class="string">f&#x27;<span class="subst">&#123;pic_dir&#125;</span><span class="subst">&#123;file&#125;</span>&#x27;</span>)</span><br><span class="line">    mob_images.append(image)</span><br><span class="line"></span><br><span class="line">big_image = Image.new(<span class="string">&quot;1&quot;</span>, (<span class="number">250</span>, <span class="number">250</span>))</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(loc_arange)):</span><br><span class="line">    mob_locs_j = loc_arange[j]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(fix_images)):</span><br><span class="line">        big_image.paste(fix_images[i], <span class="built_in">list</span>(pixel * np.array(fix_locs[i])))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(mob_images)):</span><br><span class="line">        big_image.paste(mob_images[i], <span class="built_in">list</span>(pixel * np.array(mob_locs_j[i])))</span><br><span class="line">    big_image.save(<span class="string">f&#x27;<span class="subst">&#123;save_dir&#125;</span>big_image_<span class="subst">&#123;j&#125;</span>.png&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;\rImage <span class="subst">&#123;j + <span class="number">1</span>&#125;</span> / <span class="subst">&#123;<span class="built_in">len</span>(loc_arange)&#125;</span> saved.&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pyzbar.pyzbar <span class="keyword">import</span> decode</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">qr_dir = <span class="string">&#x27;./qrcode/&#x27;</span></span><br><span class="line">images = [f <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(qr_dir) <span class="keyword">if</span> <span class="keyword">not</span> f.startswith(<span class="string">&#x27;.&#x27;</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(images)):</span><br><span class="line">    image = Image.<span class="built_in">open</span>(<span class="string">f&#x27;<span class="subst">&#123;qr_dir&#125;</span>big_image_<span class="subst">&#123;i&#125;</span>.png&#x27;</span>) <span class="comment"># Open the image file</span></span><br><span class="line">    data = decode(image) <span class="comment"># Decode the QR code in the image</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Check if the QR code is valid</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(data) &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&#x27;\nbig_image_<span class="subst">&#123;i&#125;</span> is valid.&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;\r<span class="subst">&#123;i + <span class="number">1</span>&#125;</span> / <span class="subst">&#123;<span class="built_in">len</span>(images)&#125;</span> has finished&#x27;</span>, end=<span class="string">&#x27;&#x27;</span>)</span><br></pre></td></tr></table></figure>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/geekgame/" rel="tag"># geekgame</a>
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+              <a href="/tags/%E5%8F%82%E8%B5%9B%E8%AE%B0%E5%BD%95/" rel="tag"># 参赛记录</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://brightsx.github.io/2023/11/01/First-Page-cn/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sheng Xu">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="许晟的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/01/First-Page-cn/" class="post-title-link" itemprop="url">第一次提交</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-11-01 00:22:21 / 修改时间：15:14:05" itemprop="dateCreated datePublished" datetime="2023-11-01T00:22:21+08:00">2023-11-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tc/" itemprop="url" rel="index"><span itemprop="name">tc</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/11/01/First-Page-cn/" rel="prev" title="第一次提交">
+      <i class="fa fa-chevron-left"></i> 第一次提交
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://brightsx.github.io/2023/11/01/First-Page-en/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Sheng Xu">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="许晟的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/11/01/First-Page-en/" class="post-title-link" itemprop="url">First Page</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2023-11-01 00:22:21 / 修改时间：15:14:12" itemprop="dateCreated datePublished" datetime="2023-11-01T00:22:21+08:00">2023-11-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/tc/" itemprop="url" rel="index"><span itemprop="name">tc</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
   
 
 
@@ -603,6 +490,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在最前面</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E7%9C%BC%E7%9B%AF%E5%B8%A7%EF%BC%88%E9%80%9A%E8%BF%87%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">一眼盯帧（通过）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%8C%97%E9%97%AE%E7%AD%94%EF%BC%88%E9%80%9A%E8%BF%87%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">小北问答（通过）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Z%E5%85%AC%E5%8F%B8%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88flag1%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">Z公司的服务器（flag1）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%EF%BC%88%E9%80%9A%E8%BF%87%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">基本功（通过）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dark-Room%EF%BC%88flag1%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">Dark Room（flag1）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Emoji-Wordle%EF%BC%88%E9%80%9A%E8%BF%87%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">Emoji Wordle（通过）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%89%E5%8C%96%E7%BB%BF%E8%89%B2%E7%89%88%E5%85%8D%E8%B4%B9%E4%B8%8B%E8%BD%BD%EF%BC%88%E9%80%9A%E8%BF%87%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">汉化绿色版免费下载（通过）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E5%AD%A6C%E8%AF%AD%E8%A8%80%EF%BC%88flag1%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">初学C语言（flag1）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E8%BF%87%E6%BB%A4%E5%96%B5%EF%BC%8C%E8%B0%A2%E8%B0%A2%E5%96%B5%EF%BC%88flag1%EF%BC%8Cflag2%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">关键词过滤喵，谢谢喵（flag1，flag2）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%AB%A0%E9%B1%BC%E7%9A%84%E6%9B%B2%E5%A5%87%EF%BC%88%E9%80%9A%E8%BF%87%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">小章鱼的曲奇（通过）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%8E%E7%BB%B4%E7%A0%81%EF%BC%88flag1%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">华维码（flag1）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
