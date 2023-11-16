@@ -26,7 +26,23 @@
     <title>MacOS系统下x86_64-linux交叉编译记录</title>
     <url>/2023/11/15/cross-compilation-on-MacOS/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在自学<a href="https://jyywiki.cn/OS/2023/index.html">NJU OS: Operating System Design and Implementation</a>课程的过程中，所有的实验都在<code>Abstract Machine</code>上完成，源码可以参考<a href="https://git.nju.edu.cn/jyy/os-workbench">Yanyan Jiang / os-workbench · 极狐GitLab</a>。<code>Abstract Machine</code>可以支持多种架构，但都需要在<code>Linux</code>内核的虚拟机中完成。本人平时用的是<code>macOS</code>系统，因此不能运行<code>Linux</code>下的可执行文件，但实验最终是通过<code>qemu</code>运行虚拟机的方式载入<code>Abstract Machine</code>，所以理论上可以不需要在<code>macOS</code>上运行程序。于是某一天本人突发奇想，能不能通过交叉编译的方式，在<code>macOS</code>上编译出<code>Linux</code>的可执行文件，并用<code>qemu</code>虚拟机运行。本文就简单梳理了将这一想法实现的过程。</p>
-<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1><h1 id="步骤一-安装交叉编译工具链"><a href="#步骤一-安装交叉编译工具链" class="headerlink" title="步骤一 安装交叉编译工具链"></a>步骤一 安装交叉编译工具链</h1><p>在<code>macOS</code>上，<code>Homebrew</code>是常用的包管理工具。安装<code>Homebrew</code>需要运行的命令如下</p>
+<h1 id="关于交叉编译"><a href="#关于交叉编译" class="headerlink" title="关于交叉编译"></a>关于交叉编译</h1><p>交叉编译是一种编译技术，它允许开发者在一个平台（称为主机）上生成另一个平台（称为目标）上运行的代码。例如，本文的背景是在macOS上编译一个Linux可执行文件。</p>
+<p>在这个背景下，主机是x86_64架构的macOS，目标是x86_64架构的Linux。因此需要一个交叉编译器，这个编译器在macOS上运行，但编译生成的代码是为Linux准备的，不能在主机上运行。</p>
+<p>以下是一个简单的步骤，说明如何在macOS上交叉编译Linux可执行文件：</p>
+<ol>
+<li><p><strong>构建交叉编译器</strong>：需要通过一些途径构建主机上的交叉编译工具，例如<code>x86_64-linux-gnu-gcc</code>。</p>
+</li>
+<li><p><strong>编写代码</strong>：像平时一样编写你的C或C++代码，代码应该不依赖于任何特定于macOS的特性或库，因为这些在Linux上可能不存在。</p>
+</li>
+<li><p><strong>编译代码</strong>：使用交叉编译器来编译你的代码。例如，你可以使用以下命令来编译一个名为<code>hello.c</code>的C程序：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x86_64-linux-gnu-gcc -o hello hello.c</span><br></pre></td></tr></table></figure>
+<p>这个命令会生成一个名为<code>hello</code>的可执行文件。</p>
+</li>
+<li><p><strong>测试代码</strong>：你可以把生成的可执行文件复制到一个Linux机器上，也可以是Ubuntu虚拟机或Docker，然后运行它来测试。</p>
+</li>
+</ol>
+<p>这只是一个基本的介绍。交叉编译可能会涉及到更复杂的问题，例如处理库依赖、调试和优化等。以下主要介绍的是这里的第一步，也就是如何构建交叉编译工具。</p>
+<h1 id="步骤一-安装构建交叉编译工具链的工具"><a href="#步骤一-安装构建交叉编译工具链的工具" class="headerlink" title="步骤一 安装构建交叉编译工具链的工具"></a>步骤一 安装构建交叉编译工具链的工具</h1><p>在<code>macOS</code>上，<code>Homebrew</code>是常用的包管理工具。安装<code>Homebrew</code>需要运行的命令如下</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre></td></tr></table></figure>
 <p>通过<code>Homebrew</code>安装<code>macOS</code>下用于构建交叉编译工具链的工具<code>crosstool-ng</code></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install crosstool-ng</span><br></pre></td></tr></table></figure>
@@ -60,7 +76,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:/path/to/my_toolchain/build/bin</span><br></pre></td></tr></table></figure>
 <h1 id="步骤四-项目编译工具链"><a href="#步骤四-项目编译工具链" class="headerlink" title="步骤四 项目编译工具链"></a>步骤四 项目编译工具链</h1><p>在本项目中，进入<code>os-workbench/kernel</code>目录，运行<code>make</code>相关命令即可，需要注意在<code>Makefile</code>中，需要使用交叉编译工具链，而不是本地编译工具链的至少包括但不限于</p>
 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">AR        = <span class="variable">$(CROSS_COMPILE)</span>ar</span><br><span class="line">AS        = <span class="variable">$(CROSS_COMPILE)</span>gcc</span><br><span class="line">CC        = <span class="variable">$(CROSS_COMPILE)</span>gcc</span><br><span class="line">CXX       = <span class="variable">$(CROSS_COMPILE)</span>g++</span><br><span class="line">LD        = <span class="variable">$(CROSS_COMPILE)</span>ld</span><br><span class="line">OBJDUMP   = <span class="variable">$(CROSS_COMPILE)</span>objdump</span><br><span class="line">OBJCOPY   = <span class="variable">$(CROSS_COMPILE)</span>objcopy</span><br><span class="line">READELF   = <span class="variable">$(CROSS_COMPILE)</span>readelf</span><br></pre></td></tr></table></figure>
-<p>以上就是MacOS系统下x86_64-linux交叉编译记录。</p>
+<p>以上就是MacOS系统下构建x86_64-linux交叉编译工具链的记录。</p>
 ]]></content>
       <categories>
         <category>Tech</category>
