@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>First Page</title>
-    <url>/2023/11/01/First-Page-en/</url>
+    <title>第一次提交</title>
+    <url>/2023/11/01/First-Page-cn/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>tc</category>
@@ -12,25 +12,14 @@
       </tags>
   </entry>
   <entry>
-    <title>MacOS系统通过musl-cross交叉编译</title>
-    <url>/2023/11/16/musl-cross/</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上一篇博客<a href="/2023/11/15/cross-compilation-on-MacOS">MacOS系统下x86_64-linux交叉编译记录</a>讨论了通过<code>crosstool-ng</code>构建交叉编译工具链的流程，事实上，在MacOS和Windows平台上，有一些已经构建好的工具链可以直接使用。</p>
-<h1 id="关于musl-cross-make"><a href="#关于musl-cross-make" class="headerlink" title="关于musl-cross-make"></a>关于musl-cross-make</h1><p>musl-cross-make(<a href="https://words.filippo.io/easy-windows-and-linux-cross-compilers-for-macos/">EASY WINDOWS AND LINUX CROSS-COMPILERS FOR MACOS</a>)是基于 <a href="http://www.musl-libc.org/">musl</a>库的交叉编译器，在功能上与<code>crosstool-ng</code>构建的<code>x86_64-linux-gnu-</code>工具相同。</p>
-<p>musl-cross-make在macOS上也可以通过<code>brew</code>安装。从macOS编译C/C++代码到Linux可以通过以下两个Homebrew包来实现：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install FiloSottile/musl-cross/musl-cross</span><br></pre></td></tr></table></figure>
-<p>如果要从源代码构建，可以运行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install --build-from-source FiloSottile/musl-cross/musl-cross</span><br></pre></td></tr></table></figure>
-<p>musl-cross-make同样支持arm架构，如果需要交叉编译到arm架构的机器上运行，例如树莓派，可以运行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install FiloSottile/musl-cross/musl-cross --without-x86_64 --with-arm-hf</span><br></pre></td></tr></table></figure>
-<p>这样就会在Homebrew默认的安装路径下构建完成musl-cross-make的交叉编译工具。</p>
-<h1 id="mingw-w64"><a href="#mingw-w64" class="headerlink" title="mingw-w64"></a>mingw-w64</h1><p>从macOS编译C/C++代码到Windows也有Homebrew包实现，可以如下安装</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mingw-w64</span><br></pre></td></tr></table></figure>
-]]></content>
+    <title>First Page</title>
+    <url>/2023/11/01/First-Page-en/</url>
+    <content><![CDATA[]]></content>
       <categories>
-        <category>Tech</category>
+        <category>tc</category>
       </categories>
       <tags>
-        <tag>Cross Compilation</tag>
+        <tag>tt</tag>
       </tags>
   </entry>
   <entry>
@@ -209,17 +198,6 @@
       </tags>
   </entry>
   <entry>
-    <title>第一次提交</title>
-    <url>/2023/11/01/First-Page-cn/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>tc</category>
-      </categories>
-      <tags>
-        <tag>tt</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MacOS系统下x86_64-linux交叉编译记录</title>
     <url>/2023/11/15/cross-compilation-on-MacOS/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在自学<a href="https://jyywiki.cn/OS/2023/index.html">NJU OS: Operating System Design and Implementation</a>课程的过程中，所有的实验都在Abstract Machine上完成，源码可以参考<a href="https://git.nju.edu.cn/jyy/os-workbench">Yanyan Jiang / os-workbench · 极狐GitLab</a>。Abstract Machine可以支持多种架构，但都需要在Linux内核中完成。本人平时用的是macOS系统，因此不能运行Linux下的可执行文件，需要通过Linux虚拟机完成实验。但另一方面，实验最终是通过<code>qemu</code>运行虚拟机的方式载入Abstract Machine，所以理论上可以不需要在macOS上运行程序。于是某一天本人突发奇想，能不能通过交叉编译的方式，在macOS上编译出Linux的可执行文件，并用<code>qemu</code>运行，这样就可以避开虚拟机的使用。本文就简单梳理了将这一想法实现的过程。</p>
@@ -274,6 +252,28 @@
 <h1 id="步骤四-项目编译工具链"><a href="#步骤四-项目编译工具链" class="headerlink" title="步骤四 项目编译工具链"></a>步骤四 项目编译工具链</h1><p>在本项目中，进入<code>os-workbench/kernel</code>目录，运行<code>make</code>相关命令即可，需要注意在<code>Makefile</code>中，需要使用交叉编译工具链，而不是本地编译工具链的至少包括但不限于</p>
 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">AR        = <span class="variable">$(CROSS_COMPILE)</span>ar</span><br><span class="line">AS        = <span class="variable">$(CROSS_COMPILE)</span>gcc</span><br><span class="line">CC        = <span class="variable">$(CROSS_COMPILE)</span>gcc</span><br><span class="line">CXX       = <span class="variable">$(CROSS_COMPILE)</span>g++</span><br><span class="line">LD        = <span class="variable">$(CROSS_COMPILE)</span>ld</span><br><span class="line">OBJDUMP   = <span class="variable">$(CROSS_COMPILE)</span>objdump</span><br><span class="line">OBJCOPY   = <span class="variable">$(CROSS_COMPILE)</span>objcopy</span><br><span class="line">READELF   = <span class="variable">$(CROSS_COMPILE)</span>readelf</span><br></pre></td></tr></table></figure>
 <p>以上就是MacOS系统下构建x86_64-linux交叉编译工具链的记录。</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>Cross Compilation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>MacOS系统通过musl-cross交叉编译</title>
+    <url>/2023/11/16/musl-cross/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上一篇博客<a href="/2023/11/15/cross-compilation-on-MacOS">MacOS系统下x86_64-linux交叉编译记录</a>讨论了通过<code>crosstool-ng</code>构建交叉编译工具链的流程，事实上，在MacOS和Windows平台上，有一些已经构建好的工具链可以直接使用。</p>
+<h1 id="关于musl-cross-make"><a href="#关于musl-cross-make" class="headerlink" title="关于musl-cross-make"></a>关于musl-cross-make</h1><p>musl-cross-make(<a href="https://words.filippo.io/easy-windows-and-linux-cross-compilers-for-macos/">EASY WINDOWS AND LINUX CROSS-COMPILERS FOR MACOS</a>)是基于<a href="http://www.musl-libc.org/">musl</a>库的交叉编译器，在功能上与<code>crosstool-ng</code>构建的<code>x86_64-linux-gnu-</code>工具相同。</p>
+<p>musl-cross-make在macOS上也可以通过<code>brew</code>安装。从macOS编译C/C++代码到Linux可以通过以下两个Homebrew包来实现：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install FiloSottile/musl-cross/musl-cross</span><br></pre></td></tr></table></figure>
+<p>如果要从源代码构建，可以运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install --build-from-source FiloSottile/musl-cross/musl-cross</span><br></pre></td></tr></table></figure>
+<p>musl-cross-make同样支持arm架构，如果需要交叉编译到arm架构的机器上运行，例如树莓派，可以运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install FiloSottile/musl-cross/musl-cross --without-x86_64 --with-arm-hf</span><br></pre></td></tr></table></figure>
+<p>这样就会在Homebrew默认的安装路径下构建完成musl-cross-make的交叉编译工具。</p>
+<h1 id="mingw-w64"><a href="#mingw-w64" class="headerlink" title="mingw-w64"></a>mingw-w64</h1><p>从macOS编译C/C++代码到Windows也有Homebrew包实现，可以如下安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mingw-w64</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Tech</category>
