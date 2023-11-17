@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>第一次提交</title>
-    <url>/2023/11/01/First-Page-cn/</url>
+    <title>First Page</title>
+    <url>/2023/11/01/First-Page-en/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>tc</category>
@@ -12,8 +12,8 @@
       </tags>
   </entry>
   <entry>
-    <title>First Page</title>
-    <url>/2023/11/01/First-Page-en/</url>
+    <title>第一次提交</title>
+    <url>/2023/11/01/First-Page-cn/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>tc</category>
@@ -261,10 +261,72 @@
       </tags>
   </entry>
   <entry>
+    <title>Linux下musl-libc的安装</title>
+    <url>/2023/11/16/musl-libc/</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Linux下默认的c标准库是glibc，glibc是GNU项目的一部分，由于在很长的历史发展中，glibc为了性能优化、兼容性问题，加入了很多复杂的汇编优化及冗余代码，因此可读性不高，在一些程度上不利于新手对libc的学习。与此同时，目前有很多开源的libc代码，由于没有历史包袱，因此可读性非常高。下面以<code>printf</code>的实现为例，展示musl libc的实现。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// in printf.c 1.2.4</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">printf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> fmt, ...)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line">    va_list ap;</span><br><span class="line">    va_start(ap, fmt);</span><br><span class="line">    ret = <span class="built_in">vfprintf</span>(<span class="built_in">stdout</span>, fmt, ap);</span><br><span class="line">    va_end(ap);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// in vprintf.c 1.2.4</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">vfprintf</span><span class="params">(FILE *<span class="keyword">restrict</span> f, <span class="type">const</span> <span class="type">char</span> *<span class="keyword">restrict</span> fmt, va_list ap)</span></span><br><span class="line">&#123;</span><br><span class="line">    va_list ap2;</span><br><span class="line">    <span class="type">int</span> nl_type[NL_ARGMAX+<span class="number">1</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="class"><span class="keyword">union</span> <span class="title">arg</span> <span class="title">nl_arg</span>[<span class="title">NL_ARGMAX</span>+1];</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> internal_buf[<span class="number">80</span>], *saved_buf = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> olderr;</span><br><span class="line">    <span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* the copy allows passing va_list* even if va_list is an array */</span></span><br><span class="line">    va_copy(ap2, ap);</span><br><span class="line">    <span class="keyword">if</span> (printf_core(<span class="number">0</span>, fmt, &amp;ap2, nl_arg, nl_type) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        va_end(ap2);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    FLOCK(f);</span><br><span class="line">    olderr = f-&gt;flags &amp; F_ERR;</span><br><span class="line">    f-&gt;flags &amp;= ~F_ERR;</span><br><span class="line">    <span class="keyword">if</span> (!f-&gt;buf_size) &#123;</span><br><span class="line">        saved_buf = f-&gt;buf;</span><br><span class="line">        f-&gt;buf = internal_buf;</span><br><span class="line">        f-&gt;buf_size = <span class="keyword">sizeof</span> internal_buf;</span><br><span class="line">        f-&gt;wpos = f-&gt;wbase = f-&gt;wend = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!f-&gt;wend &amp;&amp; __towrite(f)) ret = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span> ret = printf_core(f, fmt, &amp;ap2, nl_arg, nl_type);</span><br><span class="line">    <span class="keyword">if</span> (saved_buf) &#123;</span><br><span class="line">        f-&gt;write(f, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">if</span> (!f-&gt;wpos) ret = <span class="number">-1</span>;</span><br><span class="line">        f-&gt;buf = saved_buf;</span><br><span class="line">        f-&gt;buf_size = <span class="number">0</span>;</span><br><span class="line">        f-&gt;wpos = f-&gt;wbase = f-&gt;wend = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (ferror(f)) ret = <span class="number">-1</span>;</span><br><span class="line">    f-&gt;flags |= olderr;</span><br><span class="line">    FUNLOCK(f);</span><br><span class="line">    va_end(ap2);</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="musl-libc简介"><a href="#musl-libc简介" class="headerlink" title="musl libc简介"></a>musl libc简介</h1><p>musl是一个C标准库，主要用于基于Linux内核的操作系统，使用MIT许可证发布。它由RichFelker开发，目标是编写一个干净、高效、符合标准的libc实现。</p>
+<p>官方网址：<a href="http://musl.libc.org/">http://musl.libc.org</a></p>
+<p>参考文档：<a href="http://musl.libc.org/manual.html">musl libc Reference Manual</a></p>
+<p>musl更多介绍：<a href="http://musl.libc.org/about.html">About musl</a></p>
+<p>需要注意，目前musl libc需要在Linux内核的系统上配置。</p>
+<h1 id="musl-libc安装过程"><a href="#musl-libc安装过程" class="headerlink" title="musl libc安装过程"></a>musl libc安装过程</h1><h2 id="方式一：通过包管理器安装"><a href="#方式一：通过包管理器安装" class="headerlink" title="方式一：通过包管理器安装"></a>方式一：通过包管理器安装</h2><p>Linux的各发行版本中一般有默认的包管理器，例如在Ubuntu下，可以通过运行命令安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y musl musl-dev</span><br></pre></td></tr></table></figure>
+<p>安装完之后，系统环境变量的配置目录下会有musl的编译工具链</p>
+<p>运行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">musl-gcc --version</span><br></pre></td></tr></table></figure>
+<p>即可确认已经正确安装。</p>
+<p>此外，在Linux其他发行版本下，<code>apk</code>、<code>pacman</code>、<code>emerge</code>等也可以安装musl libc。</p>
+<h2 id="方式二：源码编译安装"><a href="#方式二：源码编译安装" class="headerlink" title="方式二：源码编译安装"></a>方式二：源码编译安装</h2><p>利用包管理工具安装的musl libc使用的都是默认配置，如果需要自定义安装的配置，需要通过源码安装。对于新手而言，通过源码编译安装也能更加熟悉musl的各类功能。</p>
+<h3 id="步骤一-获取源码"><a href="#步骤一-获取源码" class="headerlink" title="步骤一 获取源码"></a>步骤一 获取源码</h3><p>通过git方式将源码下载到本地</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git://git.musl-libc.org/musl</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://git.musl-libc.org/git/musl</span><br></pre></td></tr></table></figure>
+<h3 id="步骤二-编译musl环境"><a href="#步骤二-编译musl环境" class="headerlink" title="步骤二 编译musl环境"></a>步骤二 编译musl环境</h3><p>进入<code>musl</code>文件夹，创建并进入安装目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> musl</span><br><span class="line"><span class="built_in">mkdir</span> build &amp;&amp; <span class="built_in">cd</span> build</span><br></pre></td></tr></table></figure>
+<h4 id="configure配置编译参数"><a href="#configure配置编译参数" class="headerlink" title="./configure配置编译参数"></a><code>./configure</code>配置编译参数</h4><p><code>configure</code>文件是一个可执行的POSIX shell脚本，运行后会在<code>musl</code>目录下产生<code>config.mak</code>文件，这个文件将会被<code>Makefile</code>调用</p>
+<p>运行配置文件的格式是</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">../configure [OPTION] [VAR=VALUE]</span><br></pre></td></tr></table></figure>
+<p><code>[OPTION]</code>和<code>[VAR=VALUE]</code>可用于指定configure配置的选项和参数，以下是常用的例子：</p>
+<ul>
+<li><p><code>–prefix</code>，用于指定musl的安装目录，默认是<code>/usr/local/musl</code>，而不是<code>/usr/local</code>，这是为了避免与主机上现有的非musl环境冲突。如果想要安装musl作为系统libc，则前缀设置为<code>/usr</code>或<code>/</code>。</p>
+</li>
+<li><p><code>–syslibdir</code>，用于指定动态链接器的安装位置。默认是<code>/lib</code>。</p>
+</li>
+<li><p><code>CC=…</code>，指定编译器，默认将是系统上默认的编译器，如<code>gcc</code>。</p>
+</li>
+<li><p><code>CFLAGS=…</code>，编译器的自定义选项。</p>
+</li>
+<li><p><code>–disable-shared</code>，默认不开启，开启则禁用构建共享的<code>libc.so</code>，将减半构建时间。</p>
+</li>
+<li><p><code>–disable-static</code>，默认不开启，开启则禁用构建<code>libc.a</code>，但其他<code>.a</code>文件仍然被构建。这也将减半构建时间。</p>
+</li>
+<li><p><code>–enable-warnings</code>，打开推荐的GCC警告选项集，musl旨在编译无警告。</p>
+</li>
+<li><p><code>–enable-debug</code>，打开调试。在<code>CFLAGS</code>中手动添加<code>-g</code>也可以。在未来，<code>–enable-debug</code>可能还会在源代码级别启用额外的调试功能。这一项调试程序时有显著的作用。例如，当使用<code>gdb</code>调试一个c程序时，如果在编译过程加入<code>-g</code>选项，<code>gdb</code>调试仅仅只能在当前编译的c文件中调试，而不能调试进入c的库函数程序。如果加入这一选项，调试过程可以深入库函数内部（例如<code>printf</code>、<code>malloc</code>等），了解程序每一步的运行的状态。</p>
+</li>
+</ul>
+<p>运行<code>../configure --help</code>可以看到configure配置的更多参数。</p>
+<h4 id="使用make进行编译安装"><a href="#使用make进行编译安装" class="headerlink" title="使用make进行编译安装"></a>使用make进行编译安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+<p><code>sudo</code>需要输入用户密码，安装完成后会在指定的安装目录生成musl的编译工具链。如果安装目录不在系统环境变量中，需要配置环境变量。</p>
+<h3 id="步骤三-用musl编译程序"><a href="#步骤三-用musl编译程序" class="headerlink" title="步骤三 用musl编译程序"></a>步骤三 用musl编译程序</h3><p>以编译c程序为例，<code>musl-gcc</code>和<code>gcc</code>一样可以编译c程序。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&#x27;Hello World!&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">musl-gcc hello.c &amp;&amp; ./a.out <span class="comment"># Hello World!</span></span><br></pre></td></tr></table></figure>
+<p>将输出<code>Hello World!</code>的结果。</p>
+]]></content>
+      <categories>
+        <category>Tech</category>
+      </categories>
+      <tags>
+        <tag>libc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MacOS系统通过musl-cross交叉编译</title>
     <url>/2023/11/16/musl-cross/</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>上一篇博客<a href="/2023/11/15/cross-compilation-on-MacOS">MacOS系统下x86_64-linux交叉编译记录</a>讨论了通过<code>crosstool-ng</code>构建交叉编译工具链的流程，事实上，在MacOS和Windows平台上，有一些已经构建好的工具链可以直接使用。</p>
-<h1 id="关于musl-cross-make"><a href="#关于musl-cross-make" class="headerlink" title="关于musl-cross-make"></a>关于musl-cross-make</h1><p>musl-cross-make(<a href="https://words.filippo.io/easy-windows-and-linux-cross-compilers-for-macos/">EASY WINDOWS AND LINUX CROSS-COMPILERS FOR MACOS</a>)是基于<a href="http://www.musl-libc.org/">musl</a>库的交叉编译器，在功能上与<code>crosstool-ng</code>构建的<code>x86_64-linux-gnu-</code>工具相同。</p>
+<h1 id="musl-cross-make"><a href="#musl-cross-make" class="headerlink" title="musl-cross-make"></a>musl-cross-make</h1><p>musl-cross-make(<a href="https://words.filippo.io/easy-windows-and-linux-cross-compilers-for-macos/">EASY WINDOWS AND LINUX CROSS-COMPILERS FOR MACOS</a>)是基于<a href="http://www.musl-libc.org/">musl</a>库的交叉编译器，在功能上与<code>crosstool-ng</code>构建的<code>x86_64-linux-gnu-</code>工具相同。musl原本是Linux下的一个编译工具，具体可以参见<a href="/2023/11/16/musl-libc">Linux下musl-libc的安装</a>。</p>
 <p>musl-cross-make在macOS上也可以通过<code>brew</code>安装。从macOS编译C/C++代码到Linux可以通过以下两个Homebrew包来实现：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install FiloSottile/musl-cross/musl-cross</span><br></pre></td></tr></table></figure>
 <p>如果要从源代码构建，可以运行</p>
@@ -274,6 +336,9 @@
 <p>这样就会在Homebrew默认的安装路径下构建完成musl-cross-make的交叉编译工具。</p>
 <h1 id="mingw-w64"><a href="#mingw-w64" class="headerlink" title="mingw-w64"></a>mingw-w64</h1><p>从macOS编译C/C++代码到Windows也有Homebrew包实现，可以如下安装</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mingw-w64</span><br></pre></td></tr></table></figure>
+<h1 id="交叉编译工具链的使用"><a href="#交叉编译工具链的使用" class="headerlink" title="交叉编译工具链的使用"></a>交叉编译工具链的使用</h1><p>通过<code>brew</code>安装完后，默认目录<code>usr/local/bin</code>下会存在编译工具，以x86_64的musl-cross-make编译<code>.c</code>文件为例，通过</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">x86_64-linux-musl-gcc [input.c] [-CFLAGS]</span><br></pre></td></tr></table></figure>
+<p>即可编译生成x86_64-linux下的可执行文件</p>
 ]]></content>
       <categories>
         <category>Tech</category>
